@@ -342,7 +342,7 @@ namespace Nez
 		{}
 
 
-		internal void begin()
+	    public void begin()
 		{
 			Assert.isFalse( _renderers.length == 0, "Scene has begun with no renderer. At least one renderer must be present before beginning a scene." );
 			Physics.reset();

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
+using System.Collections.Generic;
 using Nez.Systems;
 using Nez.Console;
 using Nez.Tweens;
@@ -81,8 +82,11 @@ namespace Nez
 		string _windowTitle;
 		#endif
 
-		Scene _scene;
-		Scene _nextScene;
+//		Scene _scene;
+//		Scene _nextScene;
+	    public List<Scene> scenes = new List<Scene>();
+
+
 		internal SceneTransition _sceneTransition;
 
 		/// <summary>
@@ -101,8 +105,8 @@ namespace Nez
 		/// </summary>
 		public static Scene scene
 		{
-			get { return _instance._scene; }
-			set { _instance._nextScene = value; }
+			get { return _instance.scenes[0]; }
+			//set { _instance._nextScene = value; }
 		}
 
 
@@ -220,20 +224,11 @@ namespace Nez
 				return;
 			}
 
-			if( _scene != null )
-				_scene.update();
-
-			if( _scene != _nextScene )
-			{
-				if( _scene != null )
-					_scene.end();
-
-				_scene = _nextScene;
-				onSceneChanged();
-
-				if( _scene != null )
-					_scene.begin();
-			}
+		    foreach (var _scene in scenes)
+		    {   
+			    if( _scene != null )
+				    _scene.update();
+		    }
 
 			#if DEBUG
 			TimeRuler.instance.endMark( "update" );
@@ -272,38 +267,17 @@ namespace Nez
 			if( _sceneTransition != null )
 				_sceneTransition.preRender( Graphics.instance );
 
-			if( _scene != null )
-			{
-				_scene.render();
 
+		    foreach (var _scene in scenes)
+		    {
+				_scene.render();
 				#if DEBUG
 				if( debugRenderEnabled )
 					Debug.render();
 				#endif
-
-				// render as usual if we dont have an active SceneTransition
-				if( _sceneTransition == null )
-					_scene.postRender();
-			}
-
-			// special handling of SceneTransition if we have one
-			if( _sceneTransition != null )
-			{
-				if( _scene != null && _sceneTransition.wantsPreviousSceneRender && !_sceneTransition.hasPreviousSceneRender )
-				{
-					_scene.postRender( _sceneTransition.previousSceneRender );
-					if( _sceneTransition._loadsNewScene )
-						scene = null;
-					startCoroutine( _sceneTransition.onBeginTransition() );
-				}
-				else if( _scene != null )
-				{
-					_scene.postRender();
-				}
-
-				_sceneTransition.render( Graphics.instance );
-			}
-
+				_scene.postRender();
+		    }
+        
 			#if DEBUG
 			TimeRuler.instance.endMark( "draw" );
 			DebugConsole.instance.render();
