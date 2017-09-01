@@ -62,3 +62,5 @@ bld/
 # NuGet v3's project.json files produces more ignoreable files
 *.nuget.props
 *.nuget.targets
+*/include_all_cs.py
+*/out.txt

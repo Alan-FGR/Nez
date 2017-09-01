@@ -29,14 +29,14 @@ namespace Nez
 		public bool move( Vector2 motion, out CollisionResult collisionResult )
 		{
 			collisionResult = new CollisionResult();
-
+		    
 			// no collider? just move and forget about it
 			if( entity.getComponent<Collider>() == null || _triggerHelper == null )
 			{
 				entity.transform.position += motion;
 				return false;
 			}
-
+		    
 			// 1. move all non-trigger Colliders and get closest collision
 			var colliders = entity.getComponents<Collider>();
 			for( var i = 0; i < colliders.Count; i++ )

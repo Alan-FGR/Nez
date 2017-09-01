@@ -87,9 +87,10 @@ namespace Nez.Tiled
 
 			if( orientation == TiledMapOrientation.Isometric )
 			{
-				var layer = new TiledIsometricTiledLayer( this, name, width, height );
-				layers.Add( layer );
-				return layer;
+			    throw new Exception();
+//				var layer = new TiledIsometricTiledLayer( this, name, width, height );
+//				layers.Add( layer );
+//				return layer;
 			}
 
 			throw new NotImplementedException();
@@ -107,9 +108,10 @@ namespace Nez.Tiled
 
 			if( orientation == TiledMapOrientation.Isometric )
 			{
-				var layer = new TiledIsometricTiledLayer( this, name, width, height, tiles );
-				layers.Add( layer );
-				return layer;
+			    throw new Exception();
+//				var layer = new TiledIsometricTiledLayer( this, name, width, height, tiles );
+//				layers.Add( layer );
+//				return layer;
 			}
 
 			throw new NotImplementedException();

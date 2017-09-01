@@ -271,9 +271,10 @@ namespace Nez
 		/// <param name="result">Result.</param>
 		public bool collidesWith( Collider collider, out CollisionResult result )
 		{
-			if( shape.collidesWithShape( collider.shape, out result ) )
+            if( shape.collidesWithShape( collider.shape, out result ) )
 			{
-				result.collider = collider;
+				//result.collider = collider;
+                Debug.drawText($"{entity.name}, collides with {collider.entity.name}", 10);
 				return true;
 			}
 			return false;
